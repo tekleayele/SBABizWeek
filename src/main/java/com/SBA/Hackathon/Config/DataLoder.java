@@ -34,7 +34,10 @@ public class DataLoder implements CommandLineRunner {
 
 
         try {
-        	File file = new ClassPathResource("Merchant1.json").getFile();
+        
+        	ClassLoader classLoader = getClass().getClassLoader();
+        	File file = new File(classLoader.getResource("Merchant1.json").getFile());
+        
             br = new BufferedReader(new FileReader(file));
 
             try {
@@ -43,10 +46,10 @@ public class DataLoder implements CommandLineRunner {
             	merchantSearchRepository.save(merchantLocatorServiceResponse);
             	logger.info(br.toString());
 	        } catch (Exception e) {
-	        	logger.error("Exception loading data...");
+	        	logger.error("Exception after file  data...", e);
 	        }
         } catch (Exception e) {
-        	logger.error("Exception loading data...");
+        	logger.error("Exception loading data...", e);
         }
 
     }
