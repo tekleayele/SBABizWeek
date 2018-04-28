@@ -41,7 +41,7 @@ public class MerchantSearchController {
         return "SBA BIZ WEEK!";
     }
 	
-	@RequestMapping(value = "/search/{zipCode}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	@RequestMapping(value = "/searchByZipCode/{zipCode}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	@ApiMethod(description = "Search merchants by zip code.")
 	public MerchantLocatorServiceResponse searchMerchantByZipCode(@ApiPathParam(name = "zipCode")  @PathVariable Long zipCode) {
 		logger.info("searchMerchantByZipCode called" );
@@ -49,32 +49,32 @@ public class MerchantSearchController {
 		
 	}
 	
-	@RequestMapping(value = "/search/{categoryCode}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-	@ApiMethod(description = "Search merchants by zip code.")
+	@RequestMapping(value = "/searchByCategoryCode/{categoryCode}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	@ApiMethod(description = "Search merchants by Category Code.")
 	public MerchantLocatorServiceResponse searchMerchantByCategoryCode(@ApiPathParam(name = "categoryCode")  @PathVariable long categoryCode) {
 		logger.info("searchMerchantByCategoryCode called" );
 		return merchantSearchService.searchMerchantByCategoryCode(categoryCode);
 		
 	}
 	
-	@RequestMapping(value = "/search/{distance}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-	@ApiMethod(description = "Search merchants by zip code.")
+	@RequestMapping(value = "/searchByDistance/{distance}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	@ApiMethod(description = "Search merchants by Distance.")
 	public MerchantLocatorServiceResponse searchMerchantByDistance(@ApiPathParam(name = "distance")  @PathVariable float distance) {
 		logger.info("searchMerchantByDistance called" );
 		return merchantSearchService.searchMerchantByDistance(distance);
 		
 	}
 	
-	@RequestMapping(value = "/search/{name}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-	@ApiMethod(description = "Search merchants by zip code.")
+	@RequestMapping(value = "/searchByName/{name}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	@ApiMethod(description = "Search merchants by Name.")
 	public MerchantLocatorServiceResponse searchMerchantByName(@ApiPathParam(name = "name")  @PathVariable String name) {
 		logger.info("searchMerchantByName called" );
 		return merchantSearchService.searchMerchantByName(name);
 		
 	}
 	
-	@RequestMapping(value = "/search/{countryCode}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-	@ApiMethod(description = "Search merchants by zip code.")
+	@RequestMapping(value = "/searchByCountryCode/{countryCode}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	@ApiMethod(description = "Search merchants by Country Code.")
 	public MerchantLocatorServiceResponse searchMerchantByCountryCode(@ApiPathParam(name = "countryCode")  @PathVariable Long countryCode) {
 		logger.info("searchMerchantByCountryCode called" );
 		return merchantSearchService.searchMerchantByCountryCode(countryCode);
