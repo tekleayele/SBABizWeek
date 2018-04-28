@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -34,6 +35,10 @@ public class Response {
 	@JsonIgnore
 	private Long id;
 	
+	@JsonIgnore
+	@ManyToOne
+	private MerchantLocatorServiceResponse merchantLocatorServiceResponse;
+	
     @JsonProperty("matchIndicators")
     @OneToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "Response_ID")
@@ -48,7 +53,7 @@ public class Response {
     
     @JsonIgnore
     @ElementCollection
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, String> additionalProperties = new HashMap<String, String>();
 
     @JsonProperty("matchIndicators")
     public MatchIndicators getMatchIndicators() {
@@ -81,12 +86,12 @@ public class Response {
     }
 
     @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
+    public Map<String, String> getAdditionalProperties() {
         return this.additionalProperties;
     }
 
     @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
+    public void setAdditionalProperty(String name, String value) {
         this.additionalProperties.put(name, value);
     }
 

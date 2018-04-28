@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -24,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "merchantName"
 })
 @Entity
+@Table(name = "MatchIndicators") 
 public class MatchIndicators {
 
 	@Id
@@ -37,7 +39,7 @@ public class MatchIndicators {
     private String merchantName;
     @JsonIgnore
     @ElementCollection
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, String> additionalProperties = new HashMap<String, String>();
 
     @JsonProperty("merchantCountryCode")
     public String getMerchantCountryCode() {
@@ -60,12 +62,12 @@ public class MatchIndicators {
     }
 
     @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
+    public Map<String, String> getAdditionalProperties() {
         return this.additionalProperties;
     }
 
     @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
+    public void setAdditionalProperty(String name, String value) {
         this.additionalProperties.put(name, value);
     }
 

@@ -36,7 +36,7 @@ public class Status {
     private String statusCode;
     @JsonIgnore
     @ElementCollection
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, String> additionalProperties = new HashMap<String, String>();
 
     @JsonProperty("statusDescription")
     public String getStatusDescription() {
@@ -59,12 +59,12 @@ public class Status {
     }
 
     @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
+    public Map<String, String> getAdditionalProperties() {
         return this.additionalProperties;
     }
 
     @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
+    public void setAdditionalProperty(String name, String value) {
         this.additionalProperties.put(name, value);
     }
 

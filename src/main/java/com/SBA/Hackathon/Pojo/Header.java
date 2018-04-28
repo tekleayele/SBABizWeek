@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -26,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "endIndex"
 })
 @Entity
+@Table(name = "Header") 
 public class Header {
 
 	@Id
@@ -49,7 +51,7 @@ public class Header {
     private String endIndex;
     @JsonIgnore
     @ElementCollection
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, String> additionalProperties = new HashMap<String, String>();
 
     @JsonProperty("responseMessageId")
     public String getResponseMessageId() {
@@ -122,12 +124,12 @@ public class Header {
     }
 
     @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
+    public Map<String, String> getAdditionalProperties() {
         return this.additionalProperties;
     }
 
     @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
+    public void setAdditionalProperty(String name, String value) {
         this.additionalProperties.put(name, value);
     }
 

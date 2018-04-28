@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -33,6 +34,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @Entity
+@Table(name = "Merchant_Loc_Response") 
 @EntityListeners(AuditingEntityListener.class)
 @JsonPropertyOrder({
     "response",
@@ -45,23 +47,24 @@ public class MerchantLocatorServiceResponse {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@JsonIgnore
-	@Column(name = "MerchantLocatorServiceResponse_ID")
+	@Column(name = "merchantRspns_ID")
 	private Long id;
 	
     @JsonProperty("response")
-    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
-    @JoinColumn(name = "MerchantLocatorServiceResponse_ID")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "merchantLocatorServiceResponse", orphanRemoval = true)
     private List<Response> response = new ArrayList<Response>();
     
     @JsonProperty("header")
-    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
-    @JoinColumn(name = "MerchantLocatorServiceResponse_ID")
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "merchantRspns_ID")
     private Header header = new Header();
     @JsonProperty("status")
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "merchantRspns_ID")
     private Status status  = new Status();
     @JsonIgnore
     @ElementCollection
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, String> additionalProperties = new HashMap<String, String>();
 
 	@Column(nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -110,12 +113,12 @@ public class MerchantLocatorServiceResponse {
     }
 
     @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
+    public Map<String, String> getAdditionalProperties() {
         return this.additionalProperties;
     }
 
     @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
+    public void setAdditionalProperty(String name, String value) {
         this.additionalProperties.put(name, value);
     }
 

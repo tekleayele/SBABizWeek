@@ -90,7 +90,7 @@ public class ResponseValues {
     private String visaMerchantId;
     @JsonProperty("merchantUrl")
     @ElementCollection
-    private List<Object> merchantUrl = new ArrayList<Object>();
+    private List<String> merchantUrl = new ArrayList<String>();
     @JsonProperty("merchantCategoryCodeDesc")
     @ElementCollection
     private List<String> merchantCategoryCodeDesc = new ArrayList<String>();;
@@ -100,7 +100,7 @@ public class ResponseValues {
     private String primaryMerchantCategoryCode;
     @JsonIgnore
     @ElementCollection
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, String> additionalProperties = new HashMap<String, String>();
 
     @JsonProperty("merchantCountryCode")
     public String getMerchantCountryCode() {
@@ -273,12 +273,12 @@ public class ResponseValues {
     }
 
     @JsonProperty("merchantUrl")
-    public List<Object> getMerchantUrl() {
+    public List<String> getMerchantUrl() {
         return merchantUrl;
     }
 
     @JsonProperty("merchantUrl")
-    public void setMerchantUrl(List<Object> merchantUrl) {
+    public void setMerchantUrl(List<String> merchantUrl) {
         this.merchantUrl = merchantUrl;
     }
 
@@ -313,12 +313,12 @@ public class ResponseValues {
     }
 
     @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
+    public Map<String, String> getAdditionalProperties() {
         return this.additionalProperties;
     }
 
     @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
+    public void setAdditionalProperty(String name, String value) {
         this.additionalProperties.put(name, value);
     }
 

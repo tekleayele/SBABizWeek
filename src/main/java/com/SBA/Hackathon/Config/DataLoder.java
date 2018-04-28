@@ -24,9 +24,6 @@ public class DataLoder implements CommandLineRunner {
 
 	@Autowired
     private MerchantSearchRepository merchantSearchRepository;
-    
-    @Autowired
-    private MerchantLocatorServiceResponse merchantLocatorServiceResponse;
 
     @Override
     public void run(String...strings) throws Exception {
@@ -41,8 +38,9 @@ public class DataLoder implements CommandLineRunner {
             br = new BufferedReader(new FileReader(file));
 
             try {
-            	//merchantLocatorServiceResponse = gson.fromJson(br, MerchantLocatorServiceResponse.class);
-            	//merchantSearchRepository.save(merchantLocatorServiceResponse);
+            	MerchantLocatorServiceResponse merchantLocatorServiceResponse = new MerchantLocatorServiceResponse();
+            	merchantLocatorServiceResponse = gson.fromJson(br, MerchantLocatorServiceResponse.class);
+            	merchantSearchRepository.save(merchantLocatorServiceResponse);
             	logger.info(br.toString());
 	        } catch (Exception e) {
 	        	logger.error("Exception loading data...");
