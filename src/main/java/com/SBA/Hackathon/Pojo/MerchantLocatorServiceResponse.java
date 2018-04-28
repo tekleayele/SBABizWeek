@@ -10,7 +10,6 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -27,7 +26,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @Entity
-@Table(name = "Merchant_Loc_Response") 
+@Table(name = "MerchantLocator_Response") 
 @EntityListeners(AuditingEntityListener.class)
 @JsonPropertyOrder({
     "response",
@@ -40,37 +39,34 @@ public class MerchantLocatorServiceResponse {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@JsonIgnore
-	@Column(name = "merchantRspns_ID")
 	private Long id;
 	
     @SerializedName("responseHeader")
     @Expose
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "merchantRspns_ID")
-    private ResponseHeader responseHeader;
+    @OneToOne(cascade = CascadeType.ALL)
+    private ResponseHeader responseHeader = new ResponseHeader();
     @SerializedName("responseStatus")
     @Expose
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "merchantRspns_ID")
-    private ResponseStatus responseStatus;
+    @OneToOne(cascade = CascadeType.ALL)
+    private ResponseStatus responseStatus = new ResponseStatus();
+    
     @SerializedName("requestData")
     @Expose
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "merchantRspns_ID")
-    private RequestData requestData;
+    @OneToOne(cascade = CascadeType.ALL)
+    private RequestData requestData = new RequestData();
+    
     @SerializedName("response")
     @Expose
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "merchantRspns_ID")
+    @OneToOne(cascade = CascadeType.ALL)
     private Response response;
 
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = true, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
 	@JsonIgnore
 	private Date createdAt;
 
-	@Column(nullable = false)
+	@Column(nullable = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	@LastModifiedDate
 	@JsonIgnore

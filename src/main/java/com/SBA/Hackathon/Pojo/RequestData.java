@@ -1,6 +1,7 @@
 
 package com.SBA.Hackathon.Pojo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.ElementCollection;
@@ -8,19 +9,21 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @Entity
+@Table(name = "MerchantLocator_RequestData") 
 public class RequestData {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@JsonIgnore
 	private Long id;
-	
+
     @SerializedName("cardPresentIndicator")
     @Expose
     private String cardPresentIndicator;
@@ -50,7 +53,7 @@ public class RequestData {
     @SerializedName("postalCodeList")
     @Expose
     @ElementCollection
-    private List<String> postalCodeList = null;
+    private List<String> postalCodeList = new ArrayList<String>();
 
     public String getCardPresentIndicator() {
         return cardPresentIndicator;

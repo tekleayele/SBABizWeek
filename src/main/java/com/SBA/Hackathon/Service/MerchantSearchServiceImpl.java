@@ -1,16 +1,24 @@
 package com.SBA.Hackathon.Service;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.SBA.Hackathon.Pojo.MerchantLocatorServiceResponse;
+import com.SBA.Hackathon.Repository.MerchantSearchRepository;
 
 @Service
 public class MerchantSearchServiceImpl implements MerchantSearchService {
 
+	@Autowired
+    private MerchantSearchRepository merchantSearchRepository;
+	
 	@Override
-	public MerchantLocatorServiceResponse searchMerchantByZipCode(Long zipCode) {
-		MerchantLocatorServiceResponse temp = new MerchantLocatorServiceResponse();
-		return temp;
+	public List<MerchantLocatorServiceResponse> searchMerchantByZipCode(Long zipCode) {
+		MerchantLocatorServiceResponse merchantLocatorServiceResponse = new MerchantLocatorServiceResponse();
+		merchantLocatorServiceResponse.getRequestData().getPostalCodeList().add(String.valueOf(zipCode));
+		return merchantSearchRepository.findByRequestData(merchantLocatorServiceResponse.getRequestData());
 	}
 
 	@Override

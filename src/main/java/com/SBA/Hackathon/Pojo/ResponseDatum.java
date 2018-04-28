@@ -1,27 +1,26 @@
 
 package com.SBA.Hackathon.Pojo;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @Entity
+@Table(name = "MerchantLocator_ResponseDatume") 
 public class ResponseDatum {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@JsonIgnore
+	@Column(name = "ResponseDatum_ID")
 	private Long id;
-	
-	@JsonIgnore
-	@ManyToOne
-	private Response response;
 	
     @SerializedName("groupName")
     @Expose

@@ -2,15 +2,20 @@
 package com.SBA.Hackathon.Pojo;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @Entity
+@Table(name = "MerchantLocator_ResponseHeader") 
 public class ResponseHeader {
 
 	@Id
@@ -62,5 +67,4 @@ public class ResponseHeader {
     public void setNumRecordsReturned(int numRecordsReturned) {
         this.numRecordsReturned = numRecordsReturned;
     }
-
 }

@@ -1,5 +1,11 @@
 package com.SBA.Hackathon.Controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 
 import org.jsondoc.core.annotation.Api;
@@ -17,6 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.SBA.Hackathon.Pojo.MerchantLocatorServiceResponse;
 import com.SBA.Hackathon.Service.MerchantSearchService;
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 
 @RestController
 @Api(
@@ -31,22 +40,52 @@ public class MerchantSearchController {
 	@Autowired
 	private MerchantSearchService merchantSearchService;
 		
+	private List<MerchantLocatorServiceResponse> merchantLocatorServiceResponseList;
+	
 	@PostConstruct
-	public void init(){
+	public void init() throws JsonSyntaxException, JsonIOException, FileNotFoundException{
+		List<String> fileNameList = new ArrayList<String>();
+		fileNameList.add("Merchant1.json");
+		fileNameList.add("Merchant2.json");
+		fileNameList.add("Merchant3.json");
+		fileNameList.add("Merchant4.json");
+		fileNameList.add("Merchant5.json");
+		fileNameList.add("Merchant6.json");
+		fileNameList.add("Merchant7.json");
+		fileNameList.add("Merchant8.json");
+		fileNameList.add("Merchant9.json");
+		Gson gson = new Gson();
+		ClassLoader classLoader = getClass().getClassLoader();
+		merchantLocatorServiceResponseList = new ArrayList<MerchantLocatorServiceResponse>();
+		for(String fileName : fileNameList) {
+			File file = new File(classLoader.getResource(fileName).getFile());
+	    	merchantLocatorServiceResponseList.add(gson.fromJson(new FileReader(file), MerchantLocatorServiceResponse.class));
+		}
+	}
+	
+	@RequestMapping(value = "/getAllMerchantData", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	@ApiMethod(description = "Get all merchants data.")
+	public List<MerchantLocatorServiceResponse>  getAllMerchantData() throws JsonSyntaxException, JsonIOException, FileNotFoundException {
+		logger.info("searchMerchantByZipCode called" );
+		return merchantLocatorServiceResponseList;
 		
 	}
 	
-	@RequestMapping("/home")
-    public String home(){
-        return "SBA BIZ WEEK!";
-    }
-	
 	@RequestMapping(value = "/searchByZipCode/{zipCode}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	@ApiMethod(description = "Search merchants by zip code.")
-	public MerchantLocatorServiceResponse searchMerchantByZipCode(@ApiPathParam(name = "zipCode")  @PathVariable Long zipCode) {
+	public List<MerchantLocatorServiceResponse> searchMerchantByZipCode(@ApiPathParam(name = "zipCode")  @PathVariable Long zipCode) {
 		logger.info("searchMerchantByZipCode called" );
-		return merchantSearchService.searchMerchantByZipCode(zipCode);
-		
+		List<MerchantLocatorServiceResponse> result = new ArrayList<MerchantLocatorServiceResponse>();
+		for(MerchantLocatorServiceResponse temp :  merchantLocatorServiceResponseList) {
+			if(!temp.getRequestData().getPostalCodeList().isEmpty()) {
+				for(String postalCode :  temp.getRequestData().getPostalCodeList()) {
+					if(String.valueOf(zipCode).equals(postalCode)) {
+						result.add(temp);
+					}
+				}
+			}
+		}
+		return result;
 	}
 	
 	@RequestMapping(value = "/searchByCategoryCode/{categoryCode}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
