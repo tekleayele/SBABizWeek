@@ -8,6 +8,7 @@ import com.SBA.Hackathon.Pojo.MerchantLocatorServiceResponse;
 public class MerchantSearchServiceImpl implements MerchantSearchService {
 
 	public MerchantLocatorServiceResponse searchMerchantByZipCode(int zipCode) {
-		return null;
+		MerchantLocatorServiceResponse temp = new MerchantLocatorServiceResponse();
+		return temp;
 	}
 }

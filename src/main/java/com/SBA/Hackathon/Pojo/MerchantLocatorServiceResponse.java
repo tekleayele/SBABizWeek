@@ -1,6 +1,7 @@
 
 package com.SBA.Hackathon.Pojo;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -23,13 +24,11 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "response",
     "header",
@@ -44,11 +43,11 @@ public class MerchantLocatorServiceResponse {
 	private Long id;
 	
     @JsonProperty("response")
-    private List<Response> response = null;
+    private List<Response> response = new ArrayList<Response>();
     @JsonProperty("header")
-    private Header header;
+    private Header header = new Header();
     @JsonProperty("status")
-    private Status status;
+    private Status status  = new Status();
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 

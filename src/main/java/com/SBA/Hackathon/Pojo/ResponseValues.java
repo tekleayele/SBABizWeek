@@ -1,6 +1,7 @@
 
 package com.SBA.Hackathon.Pojo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,15 +49,15 @@ public class ResponseValues {
     @JsonProperty("merchantCity")
     private String merchantCity;
     @JsonProperty("paymentAcceptanceMethod")
-    private List<String> paymentAcceptanceMethod = null;
+    private List<String> paymentAcceptanceMethod = new ArrayList<String>();
     @JsonProperty("terminalType")
-    private List<String> terminalType = null;
+    private List<String> terminalType = new ArrayList<String>();
     @JsonProperty("firstTranDateRange")
     private String firstTranDateRange;
     @JsonProperty("lastTranDateRange")
     private String lastTranDateRange;
     @JsonProperty("merchantCategoryCode")
-    private List<String> merchantCategoryCode = null;
+    private List<String> merchantCategoryCode = new ArrayList<String>();;
     @JsonProperty("distance")
     private String distance;
     @JsonProperty("visaMerchantName")
@@ -72,9 +73,9 @@ public class ResponseValues {
     @JsonProperty("visaMerchantId")
     private String visaMerchantId;
     @JsonProperty("merchantUrl")
-    private List<Object> merchantUrl = null;
+    private List<Object> merchantUrl = new ArrayList<Object>();
     @JsonProperty("merchantCategoryCodeDesc")
-    private List<String> merchantCategoryCodeDesc = null;
+    private List<String> merchantCategoryCodeDesc = new ArrayList<String>();;
     @JsonProperty("visaEnterpriseName")
     private String visaEnterpriseName;
     @JsonProperty("primaryMerchantCategoryCode")

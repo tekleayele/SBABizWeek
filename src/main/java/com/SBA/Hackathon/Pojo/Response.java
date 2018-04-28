@@ -3,14 +3,13 @@ package com.SBA.Hackathon.Pojo;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "matchIndicators",
     "matchScore",
@@ -19,11 +18,11 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 public class Response {
 
     @JsonProperty("matchIndicators")
-    private MatchIndicators matchIndicators;
+    private MatchIndicators matchIndicators = new MatchIndicators();
     @JsonProperty("matchScore")
     private String matchScore;
     @JsonProperty("responseValues")
-    private ResponseValues responseValues;
+    private ResponseValues responseValues = new ResponseValues();
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 

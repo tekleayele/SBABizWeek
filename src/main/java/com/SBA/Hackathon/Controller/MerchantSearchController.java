@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.SBA.Hackathon.Pojo.MerchantLocatorServiceResponse;
 import com.SBA.Hackathon.Service.MerchantSearchService;
 
 @RestController
@@ -41,13 +42,11 @@ public class MerchantSearchController {
         return "SBA BIZ WEEK!";
     }
 	
-	@RequestMapping(value = "/search/{zipCode}", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	@RequestMapping(value = "/search/{zipCode}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	@ApiMethod(description = "Search merchants by zip code.")
-	public Object searchMerchantByZipCode(HttpServlet response, @ApiPathParam(name = "zipCode")  @PathVariable String zipCode) {
-		
-		//logger.info("searchMerchantByZipCode called" );
-		//merchantSearchService.searchMerchantByZipCode(zipCode);
-		return zipCode;
+	public MerchantLocatorServiceResponse searchMerchantByZipCode(@ApiPathParam(name = "zipCode")  @PathVariable int zipCode) {
+		logger.info("searchMerchantByZipCode called" );
+		return merchantSearchService.searchMerchantByZipCode(zipCode);
 		
 	}
 }
