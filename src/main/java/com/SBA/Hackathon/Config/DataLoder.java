@@ -37,14 +37,10 @@ public class DataLoder implements CommandLineRunner {
         
         	ClassLoader classLoader = getClass().getClassLoader();
         	File file = new File(classLoader.getResource("Merchant1.json").getFile());
-        
-            br = new BufferedReader(new FileReader(file));
-
             try {
             	MerchantLocatorServiceResponse merchantLocatorServiceResponse = new MerchantLocatorServiceResponse();
-            	merchantLocatorServiceResponse = gson.fromJson(br, MerchantLocatorServiceResponse.class);
+            	merchantLocatorServiceResponse = gson.fromJson(new FileReader(file), MerchantLocatorServiceResponse.class);
             	merchantSearchRepository.save(merchantLocatorServiceResponse);
-            	logger.info(br.toString());
 	        } catch (Exception e) {
 	        	logger.error("Exception after file  data...", e);
 	        }
