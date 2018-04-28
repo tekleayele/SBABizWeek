@@ -7,19 +7,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -28,7 +32,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@Component
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @JsonPropertyOrder({
@@ -42,15 +45,22 @@ public class MerchantLocatorServiceResponse {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@JsonIgnore
+	@Column(name = "MerchantLocatorServiceResponse_ID")
 	private Long id;
 	
     @JsonProperty("response")
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
+    @JoinColumn(name = "MerchantLocatorServiceResponse_ID")
     private List<Response> response = new ArrayList<Response>();
+    
     @JsonProperty("header")
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
+    @JoinColumn(name = "MerchantLocatorServiceResponse_ID")
     private Header header = new Header();
     @JsonProperty("status")
     private Status status  = new Status();
     @JsonIgnore
+    @ElementCollection
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
 	@Column(nullable = false, updatable = false)
@@ -64,6 +74,10 @@ public class MerchantLocatorServiceResponse {
 	@LastModifiedDate
 	@JsonIgnore
 	private Date updatedAt;
+	
+	public MerchantLocatorServiceResponse(){
+		
+	}
 	
     @JsonProperty("response")
     public List<Response> getResponse() {

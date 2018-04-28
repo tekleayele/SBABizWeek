@@ -3,6 +3,14 @@ package com.SBA.Hackathon.Pojo;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -15,13 +23,20 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "merchantCountryCode",
     "merchantName"
 })
+@Entity
 public class MatchIndicators {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonIgnore
+	private Long id;
+	
     @JsonProperty("merchantCountryCode")
     private String merchantCountryCode;
     @JsonProperty("merchantName")
     private String merchantName;
     @JsonIgnore
+    @ElementCollection
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonProperty("merchantCountryCode")

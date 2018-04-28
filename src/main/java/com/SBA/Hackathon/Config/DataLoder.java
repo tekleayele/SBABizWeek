@@ -18,14 +18,15 @@ import com.google.gson.Gson;
 
 @Component
 @Order(1)
-public class DataLoader implements CommandLineRunner {
+public class DataLoder implements CommandLineRunner {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
     private MerchantSearchRepository merchantSearchRepository;
-	@Autowired
-	private MerchantLocatorServiceResponse merchantLocatorServiceResponse;
+    
+    @Autowired
+    private MerchantLocatorServiceResponse merchantLocatorServiceResponse;
 
     @Override
     public void run(String...strings) throws Exception {
@@ -40,8 +41,9 @@ public class DataLoader implements CommandLineRunner {
             br = new BufferedReader(new FileReader(file));
 
             try {
-            	merchantLocatorServiceResponse = gson.fromJson(br, MerchantLocatorServiceResponse.class);
-            	merchantSearchRepository.save(merchantLocatorServiceResponse);
+            	//merchantLocatorServiceResponse = gson.fromJson(br, MerchantLocatorServiceResponse.class);
+            	//merchantSearchRepository.save(merchantLocatorServiceResponse);
+            	logger.info(br.toString());
 	        } catch (Exception e) {
 	        	logger.error("Exception loading data...");
 	        }

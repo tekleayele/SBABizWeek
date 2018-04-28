@@ -11,12 +11,13 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.SBA.Hackathon.Repository.MerchantSearchRepository;
 
+
 @SpringBootApplication (exclude = {SecurityAutoConfiguration.class })
-@EnableJpaAuditing
 @EnableJSONDoc
-@EnableJpaRepositories(basePackageClasses = MerchantSearchRepository.class)
 @ComponentScan({ "com.SBA.Hackathon.*" })
-@EntityScan("com.SBA.Hackathon.Pojo.*")  
+@EntityScan("com.SBA.Hackathon.Pojo")  
+@EnableJpaAuditing
+@EnableJpaRepositories(basePackageClasses = MerchantSearchRepository.class)
 public class SbaHackathonApplication {
 
 	public static void main(String[] args) {

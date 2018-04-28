@@ -5,6 +5,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -36,8 +43,14 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "visaEnterpriseName",
     "primaryMerchantCategoryCode"
 })
+@Entity
 public class ResponseValues {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonIgnore
+	private Long id;
+	
     @JsonProperty("merchantCountryCode")
     private String merchantCountryCode;
     @JsonProperty("merchantStreetAddress")
@@ -49,14 +62,17 @@ public class ResponseValues {
     @JsonProperty("merchantCity")
     private String merchantCity;
     @JsonProperty("paymentAcceptanceMethod")
+    @ElementCollection
     private List<String> paymentAcceptanceMethod = new ArrayList<String>();
     @JsonProperty("terminalType")
+    @ElementCollection
     private List<String> terminalType = new ArrayList<String>();
     @JsonProperty("firstTranDateRange")
     private String firstTranDateRange;
     @JsonProperty("lastTranDateRange")
     private String lastTranDateRange;
     @JsonProperty("merchantCategoryCode")
+    @ElementCollection
     private List<String> merchantCategoryCode = new ArrayList<String>();;
     @JsonProperty("distance")
     private String distance;
@@ -73,14 +89,17 @@ public class ResponseValues {
     @JsonProperty("visaMerchantId")
     private String visaMerchantId;
     @JsonProperty("merchantUrl")
+    @ElementCollection
     private List<Object> merchantUrl = new ArrayList<Object>();
     @JsonProperty("merchantCategoryCodeDesc")
+    @ElementCollection
     private List<String> merchantCategoryCodeDesc = new ArrayList<String>();;
     @JsonProperty("visaEnterpriseName")
     private String visaEnterpriseName;
     @JsonProperty("primaryMerchantCategoryCode")
     private String primaryMerchantCategoryCode;
     @JsonIgnore
+    @ElementCollection
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonProperty("merchantCountryCode")

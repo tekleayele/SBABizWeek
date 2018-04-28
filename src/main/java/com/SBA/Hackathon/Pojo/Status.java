@@ -4,6 +4,13 @@ package com.SBA.Hackathon.Pojo;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -14,13 +21,21 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "statusDescription",
     "statusCode"
 })
+@Entity
 public class Status {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "Response_ID")
+	@JsonIgnore
+	private Long id;
 
     @JsonProperty("statusDescription")
     private String statusDescription;
     @JsonProperty("statusCode")
     private String statusCode;
     @JsonIgnore
+    @ElementCollection
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonProperty("statusDescription")

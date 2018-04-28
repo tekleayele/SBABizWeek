@@ -4,6 +4,12 @@ package com.SBA.Hackathon.Pojo;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -19,8 +25,14 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "messageDateTime",
     "endIndex"
 })
+@Entity
 public class Header {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonIgnore
+	private Long id;
+	
     @JsonProperty("responseMessageId")
     private String responseMessageId;
     @JsonProperty("startIndex")
@@ -36,6 +48,7 @@ public class Header {
     @JsonProperty("endIndex")
     private String endIndex;
     @JsonIgnore
+    @ElementCollection
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonProperty("responseMessageId")
