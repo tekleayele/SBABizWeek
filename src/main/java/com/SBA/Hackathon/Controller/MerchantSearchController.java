@@ -107,9 +107,19 @@ public class MerchantSearchController {
 	
 	@RequestMapping(value = "/searchByCategoryCode/{categoryCode}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	@ApiMethod(description = "Search merchants by Category Code.")
-	public MerchantLocatorServiceResponse searchMerchantByCategoryCode(@ApiPathParam(name = "categoryCode")  @PathVariable long categoryCode) {
+	public List<MerchantLocatorServiceResponse>  searchMerchantByCategoryCode(@ApiPathParam(name = "categoryCode")  @PathVariable long categoryCode) {
 		logger.info("searchMerchantByCategoryCode called" );
-		return merchantSearchService.searchMerchantByCategoryCode(categoryCode);
+		List<MerchantLocatorServiceResponse> result = new ArrayList<MerchantLocatorServiceResponse>();
+		for(MerchantLocatorServiceResponse temp :  merchantLocatorServiceResponseList) {
+			if(!temp.getRequestData().getPostalCodeList().isEmpty()) {
+				for(String cc :  temp.getRequestData().getMerchantCategoryCodes()) {
+					if(String.valueOf(categoryCode).equals(cc)) {
+						result.add(temp);
+					}
+				}
+			}
+		}
+		return result;
 		
 	}
 	
