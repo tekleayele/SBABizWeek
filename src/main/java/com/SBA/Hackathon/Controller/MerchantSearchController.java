@@ -39,7 +39,7 @@ import com.google.gson.JsonSyntaxException;
         description = "Provides a list of methods to search merchants using different attributes.",
         stage = ApiStage.RC)
 @RequestMapping(value = "/api/merchant")
-@CrossOrigin(origins = {"http://localhost:8080", "http://localhost:8181"})
+@CrossOrigin(origins = {"http://localhost:8080", "http://localhost:8181"}) 
 public class MerchantSearchController {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
