@@ -1,8 +1,10 @@
 package com.SBA.Hackathon.Controller;
 
-import java.io.File;
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +17,11 @@ import org.jsondoc.core.pojo.ApiStage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,10 +35,11 @@ import com.google.gson.JsonSyntaxException;
 
 @RestController
 @Api(
-        name = "Merchant Search API",
+        name = "Merchant Measurement API",
         description = "Provides a list of methods to search merchants using different attributes.",
         stage = ApiStage.RC)
 @RequestMapping(value = "/api/merchant")
+@CrossOrigin(origins = {"http://localhost:8080", "http://localhost:8181"})
 public class MerchantSearchController {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -43,24 +50,34 @@ public class MerchantSearchController {
 	private List<MerchantLocatorServiceResponse> merchantLocatorServiceResponseList;
 	
 	@PostConstruct
-	public void init() throws JsonSyntaxException, JsonIOException, FileNotFoundException{
+	public void init() throws JsonSyntaxException, JsonIOException, IOException{
+		
+		ApplicationContext springAppCtx = new ClassPathXmlApplicationContext();
 		List<String> fileNameList = new ArrayList<String>();
-		fileNameList.add("Merchant1.json");
-		fileNameList.add("Merchant2.json");
-		fileNameList.add("Merchant3.json");
-		fileNameList.add("Merchant4.json");
-		fileNameList.add("Merchant5.json");
-		fileNameList.add("Merchant6.json");
-		fileNameList.add("Merchant7.json");
-		fileNameList.add("Merchant8.json");
-		fileNameList.add("Merchant9.json");
+		fileNameList.add("file:C:\\opt\\Merchant1.json");
+		fileNameList.add("file:C:\\opt\\Merchant2.json");
+		fileNameList.add("file:C:\\opt\\Merchant3.json");
+		fileNameList.add("file:C:\\opt\\Merchant4.json");
+		fileNameList.add("file:C:\\opt\\Merchant5.json");
+		fileNameList.add("file:C:\\opt\\Merchant6.json");
+		fileNameList.add("file:C:\\opt\\Merchant7.json");
+		fileNameList.add("file:C:\\opt\\Merchant8.json");
+		fileNameList.add("file:C:\\opt\\Merchant9.json");
 		Gson gson = new Gson();
-		ClassLoader classLoader = getClass().getClassLoader();
 		merchantLocatorServiceResponseList = new ArrayList<MerchantLocatorServiceResponse>();
 		for(String fileName : fileNameList) {
-			File file = new File(classLoader.getResource(fileName).getFile());
-	    	merchantLocatorServiceResponseList.add(gson.fromJson(new FileReader(file), MerchantLocatorServiceResponse.class));
+			// Get external resource from local file.
+			Resource resource = springAppCtx.getResource(fileName);
+			InputStream inputStream = resource.getInputStream();	
+			StringBuilder sb = new StringBuilder();
+			String line;
+		    BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+		    while ((line = br.readLine()) != null) {
+		        sb.append(line);
+		    }
+	    	merchantLocatorServiceResponseList.add(gson.fromJson(sb.toString(), MerchantLocatorServiceResponse.class));
 		}
+
 	}
 	
 	@RequestMapping(value = "/getAllMerchantData", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
